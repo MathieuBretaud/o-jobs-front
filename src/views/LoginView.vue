@@ -1,13 +1,13 @@
 <template>
   <v-responsive class="mx-auto" max-width="344">
-    <div class="ma-4" style="color: #009688; font-weight: bold">Login</div>
+    <div class="ma-4" style="color: #009688; font-weight: bold">Connexion</div>
 
     <form @submit.prevent="mySubmit">
       <div class="pa-5" style="display: flex; flex-direction: column; border-radius: 10px">
-        <v-text-field v-model="emailValue" class="mb-5" hide-details="auto" label="Email address"
+        <v-text-field v-model="emailValue" class="mb-5" hide-details="auto" label="Email"
                       placeholder="johndoe@gmail.com" type="email" :error-messages="emailError"></v-text-field>
 
-        <v-text-field v-model="passwordValue" label="Password" type="password"
+        <v-text-field v-model="passwordValue" label="Mot de passe" type="password"
                       hint="Enter your password to access this website" :error-messages="passwordError"></v-text-field>
       </div>
       <div v-if="data">
@@ -34,8 +34,8 @@ const validationSchema = z.object({
   email: z
       .string({required_error: "Email requis"})
       .email({message: "Email non valide"}),
-  password: string().min(1, {
-    message: "Mot de passe requis",
+  password: string({
+    required_error: "Mot de passe requis",
   }),
 });
 
