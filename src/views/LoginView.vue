@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {useForm, useField} from "vee-validate";
-import {login, type loginProps} from "@/services/user.service";
 import {string, z} from "zod";
 import {toTypedSchema} from "@vee-validate/zod";
 import {ref} from "vue"
@@ -31,7 +30,7 @@ const mySubmit = handleSubmit(async (formValues: LoginForm) => {
     await userStore.login(formValues)
     await router.push('/profil')
   } catch (e) {
-
+    setErrors({password: e as string})
   }
   // if (typeof loged === "string") {
   //   data.value = loged;

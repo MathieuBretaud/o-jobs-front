@@ -49,6 +49,11 @@ export async function login(loginForm: LoginForm): Promise<User> {
     }
 }
 
+export async function logout() {
+    // await getCSRF();
+    await clientAxios.post("/logout");
+}
+
 export async function fetchCurrentUser(): Promise<User | null> {
     try {
         const response = await clientAxios.get<Promise<User | null>>("/api/me");

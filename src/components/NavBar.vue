@@ -21,9 +21,7 @@ const emit = defineEmits<{
     <v-spacer></v-spacer>
     <template v-if="isAuthenticated">
       <v-btn href="/profil">Mon profil</v-btn>
-      <div @click="emit('logout')">
-        <v-btn href="/logout">Déconnexion</v-btn>
-      </div>
+      <v-btn @click="emit('logout')">Déconnexion</v-btn>
     </template>
     <template v-else-if="isAuthenticated === false">
       <v-btn href="/login">Connexion</v-btn>
