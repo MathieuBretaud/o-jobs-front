@@ -1,3 +1,50 @@
+<script lang="ts" setup>
+import {useForm, useField} from "vee-validate";
+import {login, type loginProps} from "@/services/user.service";
+import {string, z} from "zod";
+import {toTypedSchema} from "@vee-validate/zod";
+import {ref} from "vue"
+import {useUser} from "@/stores";
+import type {LoginForm} from "@/interfaces";
+import router from "@/router";
+
+const userStore = useUser();
+
+const data = ref<string | null>(null);
+
+const validationSchema = z.object({
+  email: z
+      .string({required_error: "Email requis"})
+      .email({message: "Email non valide"}),
+  password: string({
+    required_error: "Mot de passe requis",
+  }),
+});
+
+const {handleSubmit, isSubmitting, setErrors} = useForm({
+  validationSchema: toTypedSchema(validationSchema),
+});
+
+const mySubmit = handleSubmit(async (formValues: LoginForm) => {
+  // const loged = await login(formValues);
+  try {
+    await userStore.login(formValues)
+    await router.push('/profil')
+  } catch (e) {
+
+  }
+  // if (typeof loged === "string") {
+  //   data.value = loged;
+  //   setTimeout(() => {
+  //     data.value = null;
+  //   }, 3000);
+  // }
+});
+
+const {value: emailValue, errorMessage: emailError} = useField("email");
+const {value: passwordValue, errorMessage: passwordError} = useField("password");
+</script>
+
 <template>
   <v-responsive class="mx-auto" max-width="344">
     <div class="ma-4" style="color: #009688; font-weight: bold">Connexion</div>
@@ -21,38 +68,4 @@
   </v-responsive>
 </template>
 
-<script lang="ts" setup>
-import {useForm, useField} from "vee-validate";
-import {login, type loginProps} from "@/hooks";
-import {string, z} from "zod";
-import {toTypedSchema} from "@vee-validate/zod";
-import {ref} from "vue";
 
-const data = ref<string | null>(null);
-
-const validationSchema = z.object({
-  email: z
-      .string({required_error: "Email requis"})
-      .email({message: "Email non valide"}),
-  password: string({
-    required_error: "Mot de passe requis",
-  }),
-});
-
-const {handleSubmit, isSubmitting} = useForm<loginProps>({
-  validationSchema: toTypedSchema(validationSchema),
-});
-
-const mySubmit = handleSubmit(async (values) => {
-  const loged = await login(values);
-  if (typeof loged === "string") {
-    data.value = loged;
-    setTimeout(() => {
-      data.value = null;
-    }, 3000);
-  }
-});
-
-const {value: emailValue, errorMessage: emailError} = useField("email");
-const {value: passwordValue, errorMessage: passwordError} = useField("password");
-</script>

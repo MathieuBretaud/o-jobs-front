@@ -1,3 +1,15 @@
+<script setup lang="ts">
+
+defineProps<{
+  isAuthenticated: boolean | null
+}>()
+
+const emit = defineEmits<{
+  (e: 'logout'): void
+}>()
+// console.log(isAuthenticated)
+</script>
+
 <template>
   <v-app-bar
       color="teal-darken-4"
@@ -7,26 +19,16 @@
     </v-app-bar-title>
 
     <v-spacer></v-spacer>
-    <template v-if="isLoggedin">
+    <template v-if="isAuthenticated">
       <v-btn href="/profil">Mon profil</v-btn>
       <div @click="emit('logout')">
         <v-btn href="/logout">Déconnexion</v-btn>
       </div>
     </template>
-    <template v-else>
+    <template v-else-if="isAuthenticated === false">
       <v-btn href="/login">Connexion</v-btn>
       <v-btn href="/register">Inscription</v-btn>
     </template>
 
   </v-app-bar>
 </template>
-<script setup lang="ts">
-
-defineProps<{
-  isLoggedin: boolean
-}>()
-
-const emit = defineEmits<{
-  (e: 'logout'): void
-}>()
-</script>
