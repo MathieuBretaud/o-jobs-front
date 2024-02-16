@@ -24,15 +24,25 @@ export const useUser = defineStore('user', {
                 console.log('current null');
                 return null;
             }
+        },
+        isRoleEmployer(state): boolean {
+            if (state.currentUser!.role === 'employer') {
+                return true
+            } else {
+                return false
+            }
+        },
+        isRoleUser(state): boolean {
+            if (state.currentUser!.role === 'user') {
+                return true
+            } else {
+                return false
+            }
         }
     },
     actions: {
         async login(loginForm: LoginForm) {
-            try {
                 this.currentUser = await login(loginForm);
-            } catch (e) {
-                throw e;
-            }
         },
         async logout() {
             await logout();

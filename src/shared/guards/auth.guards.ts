@@ -13,3 +13,17 @@ export function isNotAuthenticatedGuard() {
         return '/'
     }
 }
+
+export function isRoleEmployer() {
+    const userStore = useUser();
+    if (!userStore.isRoleEmployer) {
+        return '/landing'
+    }
+}
+
+export function isRoleUser() {
+    const userStore = useUser();
+    if (!userStore.isRoleUser) {
+        return '/landing'
+    }
+}

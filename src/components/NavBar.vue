@@ -20,6 +20,7 @@ const emit = defineEmits<{
 
     <v-spacer></v-spacer>
     <template v-if="isAuthenticated">
+      <v-btn href="/jobs">Liste Jobs</v-btn>
       <v-btn href="/profil">Mon profil</v-btn>
       <v-btn @click="emit('logout')">Déconnexion</v-btn>
     </template>

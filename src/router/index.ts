@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/LoginView.vue'
 import {useUser} from "@/stores";
-import {isAuthenticatedGuard, isNotAuthenticatedGuard} from "@/shared/guards";
+import {isAuthenticatedGuard, isNotAuthenticatedGuard, isRoleUser} from "@/shared/guards";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +16,12 @@ const router = createRouter({
             name: 'login',
             beforeEnter: [isNotAuthenticatedGuard],
             component: () => import('../views/LoginView.vue')
+        },
+        {
+            path: '/jobs',
+            name: 'jobs',
+            beforeEnter: [isAuthenticatedGuard, isRoleUser],
+            component: () => import('../views/JobsPage.vue')
         },
         {
             path: '/profil',
