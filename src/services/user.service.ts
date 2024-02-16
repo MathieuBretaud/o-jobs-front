@@ -61,7 +61,6 @@ export async function fetchCurrentUser(): Promise<User | null> {
     } catch (e) {
         return null
     }
-
 }
 
 

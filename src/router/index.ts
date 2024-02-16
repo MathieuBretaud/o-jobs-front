@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '../views/LoginView.vue'
 import {useUser} from "@/stores";
 import {isAuthenticatedGuard, isNotAuthenticatedGuard, isRoleUser} from "@/shared/guards";
+import {initialFetchJobs} from "@/stores/jobStore";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,25 +9,25 @@ const router = createRouter({
         {
             path: '/',
             name: 'landing',
-            component: () => import('../views/LandingPage.vue')
+            component: () => import('@/views/LandingPage.vue')
         },
         {
             path: '/login',
             name: 'login',
             beforeEnter: [isNotAuthenticatedGuard],
-            component: () => import('../views/LoginView.vue')
+            component: () => import('@/views/LoginView.vue')
         },
         {
             path: '/jobs',
             name: 'jobs',
-            beforeEnter: [isAuthenticatedGuard, isRoleUser],
-            component: () => import('../views/JobsPage.vue')
+            beforeEnter: [isAuthenticatedGuard, isRoleUser, initialFetchJobs],
+            component: () => import('@/views/JobsPage.vue')
         },
         {
             path: '/profil',
             name: 'profil',
             beforeEnter: [isAuthenticatedGuard],
-            component: () => import('../views/Profile.vue')
+            component: () => import('@/views/Profile.vue')
         },
         {
             path: '/:notfound(.*)*',
